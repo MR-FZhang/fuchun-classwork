@@ -13,4 +13,4 @@ if temp=="yes":
     #end else
 #end if
 else:
-    print("dont worry you are not ill, "+"have a lovely day")
+    print("Dont worry you are not ill, "+"Have a lovely day!")
