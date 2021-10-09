@@ -15,4 +15,3 @@ while counter>=0:
 
 
 print(numbers)
-

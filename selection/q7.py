@@ -9,8 +9,13 @@ if temp=="yes":
         s2=input("do you have a cough")
         if s2=="yes":
             print("you have a chest infection")
+        else:
+            print("Dont worry you are not ill, "+"Have a lovely day!")
+            
         #end if
     #end else
 #end if
 else:
     print("Dont worry you are not ill, "+"Have a lovely day!")
+    
+   
