@@ -5,7 +5,7 @@ done=False
 while not done:
     result = int(input("input Medals "))
     number = int(input("Enter the school number "))
-    if number == -1:
+    if number or result== -1:
         for i in range(0,len(school)):
             print("School number", i+1, "School name", school[i], "Number of medals", medal[i])
     #end if

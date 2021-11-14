@@ -1,5 +1,5 @@
 
-OutletSales = [10, 12,15,10],[5,8,3,6],[10,12,15,10]
+OutletSales = [[10, 12,15,10],[5,8,3,6],[10,12,15,10]]
 total= 0
 for x in range (3):
     for i in range (4):
