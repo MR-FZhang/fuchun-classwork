@@ -51,13 +51,13 @@ while not done:
       
       sun_x= sun_x+2
       pygame.draw.circle(screen, YELLOW, (sun_x, sun_y),40,0)
-      sun_y=((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
+      sun_y=int((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
      
 
    if sun_x>1000:
       sun_x=-40
    sun_x= sun_x+2
-   sun_y=((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
+   sun_y=int((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
    # -- Draw here
    pygame.draw.rect(screen, BLUE, (220,330,200,150))
 
