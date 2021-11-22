@@ -34,7 +34,7 @@ option = input("Enter your choice: ")
 done=False
 while option != "5" :
     if option == "1":
-        carpark1(carpark)
+        carpark1()
     if option == "2":
         regnum = (input("what is your registration number: "))
         index = int(input("what row is your car in: "))
@@ -44,7 +44,7 @@ while option != "5" :
         regnum = (input("what is your registration number: "))
         carpark3(regnum)
     elif option == "4":
-        print(carpark)
+        print(carpark1)
     # end if 
     option = ("Invalid choice - please re-enter: ")
     print("1. Reset all spaces in the car park to ‘empty’")
