@@ -19,8 +19,8 @@ pygame.display.set_caption("Pong")
 done = False
 x_val = 150
 y_val = 200
-x_direction=1
-y_direction=1
+x_direction=5
+y_direction=5
 padd_length=15
 padd_width=60
 x_padd=0 
@@ -49,15 +49,15 @@ while not done:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
         if y_padd>0:
-            y_padd = y_padd - 5
+            y_padd = y_padd - 10
         #end if
     #end if
     if keys[pygame.K_DOWN]:
         if y_padd<420:
-            y_padd = y_padd + 5
+            y_padd = y_padd + 10
         #end if
     #end if 
-   
+   ¡
    #Next event
    # -- Game logic goes after this comment
    # -- Screen background is BLACK
@@ -81,7 +81,7 @@ while not done:
        y_direction = y_direction* -1
        x_val = x_val + x_direction
     # end if
-    if 10 < x_val < 15 and y_val in range (y_padd,y_padd+60):
+    if 10 < x_val < 20 and y_val in range (y_padd,y_padd+60):
         x_direction = x_direction * -1
     
     if x_val==0:
@@ -90,8 +90,8 @@ while not done:
         y_padd=20
         x_val = 150
         y_val = 200
-        x_direction=+1
-        y_direction=+1
+        x_direction= 5
+        y_direction= 5
 
 
         
@@ -105,3 +105,11 @@ while not done:
 #End While - End of game loop
 pygame.quit()
  
+
+
+
+
+
+
+
+

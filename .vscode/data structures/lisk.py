@@ -4,11 +4,16 @@ newlist = []
 
 index = 0
 index1 = 0
-while index in range (len(list2)):
-    if list1[index] < list2[index]:
+counter = 0
+while index in range(len(list2)) or index1 in range (len(list2)):
+    if list1[index] < list2[index1]:
         newlist.append(list1[index])
+        index += 1
     else :
         newlist.append(list2[index1])
-    index += 1
+        index1 += 1
 
+for x in list1:
+    if newlist.count(x)==0:
+        newlist.append(x)
 print(newlist)

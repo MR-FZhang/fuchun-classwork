@@ -1,61 +1,66 @@
 import pygame
 import random
+import os
 
-from pygame.draw import circle 
+
+
+ 
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-NAVY = (00,00,66)
-moon_y = 100
-moon_x = 40
-class Snow:
-    def __init__(self,y):
-        self.x = random.randint(0,700)
-        self.y = y
-        self.colour = WHITE
-        self.width = 10
-        self.height = 10
-        #end precedure
+WHITE = (255 ,255 ,255)
+#game_folder =  os.path.dirname(__file__)
+#img_folder = os.path.join(game_folder, "img")
+image = pygame.image.load("pygame/snow2.png")
 
-    def draw(self):
-        pygame.draw.rect(screen,self.colour,[self.x,self.y ,10,10])
+class Snow(pygame.sprite.Sprite):
+    def __init__(self,color, size , speed):
+        rand_colors = []
+        for j in range(50):
+            rand_colors.append(pygame.Color("#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])))
+        print(rand_colors)
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        
+        #self.color = pygame.Surface([size,size])
+        #self.color.fill(rand_colors[color]) 
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.image = pygame.transform.scale(self.image,(size,size))
+        self.rect.center = (self.rect.x/2,self.rect.y/2)
+        self.rect.x = random.randrange(0, 700)
+        self.rect.y = random.randrange(0, 500)
+        #self.color = rand_colors[random.randrange(0,49)]
+        self.speed = speed
     #end procedure
-    def update(self,vel):
-        self.y+= vel
-        print(self.y)
-        if self.y > 500:
-           self.y= 0
-           self.x = random.randint(0,700)
-    # end precedure
-#end class
 
+
+
+    def update(self):
+        self.rect.y =self.rect.y + self.speed
+        
+        if self.rect.y > 500:
+            self.rect.x = random.randrange(0, 700)
+            self.rect.y = 0
+#end class
 pygame.init()
- 
-# Set the width and height of the screen [width, height]
+
 size = (700, 500)
 screen = pygame.display.set_mode(size)
  
 pygame.display.set_caption("Snow")
  
-# Loop until the user clicks the close button.
+
 done = False
-snow2 = Snow(1)
-snow1 = Snow(10)
-snow3 = Snow(5)
-snow4 = Snow(3)
-snow5 = Snow(0)
-snow6 = Snow(8)
-snow7 = Snow(6)
-snow8 = Snow(2)
-snow9 = Snow(9)
-snow10 = Snow(16)
-
-# snow1.y = 100 
-# snow1.x= random.randint(0,700)
-
-# Used to manage how fast the screen updates
+all_sprites_group = pygame.sprite.Group() 
+number_of_flakes = 50
+for x in range (number_of_flakes):
+    my_snow = Snow(random.randrange(0,49),random.randrange(8,50),random.randint(1,5))
+    all_sprites_group.add(my_snow) 
+print(all_sprites_group)
 clock = pygame.time.Clock()
  
 # -------- Main Program Loop -----------
@@ -64,9 +69,9 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
- 
+    
     # --- Game logic should go here
- 
+    all_sprites_group.update() 
     # --- Screen-clearing code goes here
  
     # Here, we clear the screen to white. Don't put other drawing commands
@@ -74,48 +79,10 @@ while not done:
  
     # If you want a background image, replace this clear with blit'ing the
     # background image.
-    screen.fill(NAVY)
- 
+    screen.fill(BLACK)
     # --- Drawing code should go here
-
-    #snow1.y = snow1.y + 10
-    #pygame.draw.rect(screen, snow1.colour, [snow1.x,snow1.y,10,10])
-    #if snow1.y == 500 :
-    # snow1.y=0
-    # snow1.x= random.randint(0,700)
-    
-    moon_x += 2
-    pygame.draw.circle(screen, WHITE, (moon_x, moon_y),40,0)
-    moon_y=((0.0004883 *moon_x**2)-(0.3125*moon_x)+100)
-    snow1.update(1)
-    print(snow1.y)
-    snow2.draw()
-    snow2.update(2)
-    print(snow2.y)
-    snow3.draw()
-    snow3.update(3)
-    print(snow3.y)
-    snow4.draw()
-    snow4.update(4)
-    print(snow4.y)
-    snow5.draw()
-    snow5.update(5)
-    print(snow5.y)
-    snow6.draw()
-    snow6.update(6)
-    print(snow6.y)
-    snow7.draw()
-    snow7.update(7)
-    print(snow7.y)
-    snow8.draw()
-    snow8.update(8)
-    print(snow8.y)
-    snow9.draw()
-    snow9.update(9)
-    print(snow9.y)
-    snow10.draw()
-    snow10.update(10)
-    print(snow10.y)
+    # -- Draw here
+    all_sprites_group.draw (screen)
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  

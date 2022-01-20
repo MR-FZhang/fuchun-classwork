@@ -1,85 +1,95 @@
-from os import truncate
 import pygame
-# -- Global Constants
-# -- Colours
-BLACK = (0,0,0)
-WHITE = (255,255,255)
-BLUE = (50,50,255)
-YELLOW = (255,255,0)
-newcolor = (33,122,199)
-# -- Initialise PyGame
-pygame.init()
-# -- Blank Screen
+import random
+import os
 
-size = (640,480)
-screen = pygame.display.set_mode(size)
-# -- Title of new window/screen
 
-pygame.display.set_caption("MY HOUSE")
-# -- Exit game flag set to false
-done = False
-sun_x = 40
-sun_y = 100
-light= "bright"
 
-# -- Manages how fast screen refreshes
-clock = pygame.time.Clock()
-
-### -- Game Loop
-while not done:
-   # -- User input and controls
  
-   for event in pygame.event.get():
-      
-      if event.type == pygame.QUIT:
-         
-         done = True
-      #End If
-   #Next event
-   # -- Game logic goes after this comment
-   # -- Screen background is BLACK
-   screen.fill (BLACK)
-   if 0<sun_x<640:
-      screen.fill(WHITE)
-      
+# Define some colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+WHITE = (255 ,255 ,255)
+#game_folder =  os.path.dirname(__file__)
+#img_folder = os.path.join(game_folder, "img")
+#image = pygame.image.load("pygame/snow2.png","pygame/snow.png")
 
 
-   
-   if sun_x>640:
-      screen.fill(BLACK)
-      
-      
-      sun_x= sun_x+2
-      pygame.draw.circle(screen, YELLOW, (sun_x, sun_y),40,0)
-      sun_y=((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
-     
+class Snow(pygame.sprite.Sprite):
+    def __init__(self, size , speed , color):
+        rand_colors = []
+        for j in range(1000):
+            rand_colors.append(pygame.Color("#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])))
+        print(rand_colors)
+        # Call the sprite constructor
+        super().__init__()
+        # Create a sprite and fill it with colour
+        
+        #self.image = pygame.Surface([size,size])
+        #self.image.fill(WHITE) 
+        self.image = pygame.Surface([size,size] )
+        self.image.fill(rand_colors[color])
+        #self.image = pygame.transform.scale(self.image,(size,size))
+        self.rect = self.image.get_rect()
+        #self.rect.center = (self.rect.x/2,self.rect.y/2)
+        self.rect.x = random.randrange(0, 700)
+        self.rect.y = random.randrange(0, 500)
+        self.color = rand_colors[random.randrange(0,49)]
+        self.speed = speed
+    #end procedure
 
-   if sun_x>1000:
-      sun_x=-40
-   sun_x= sun_x+2
-   sun_y=((0.0004883*sun_x**2)-(0.3125*sun_x)+100)
-   # -- Draw here
-   pygame.draw.rect(screen, BLUE, (220,330,200,150))
 
-   pygame.draw.circle(screen, YELLOW, (sun_x, sun_y),40,0)
-   #if sun_x>690:
-   #   sun_x=-40
-   #sun_x= sun_x+2
-   
-     
 
-      
-  
+    def update(self):
+        self.rect.y =self.rect.y + self.speed
+        
+        if self.rect.y > 500:
+            self.rect.x = random.randrange(0, 700)
+            self.rect.y = 0
+#end class
+pygame.init()
 
-   
-   
-   
-   pygame.draw.polygon(screen, newcolor,[(220,330),(320,200),(420,330)])
-   
-   
-   # -- flip display to reveal new position of objects
-   pygame.display.flip()
-   # - The clock ticks over
-   clock.tick(60)
-#End While - End of game loop
+size = (700, 500)
+screen = pygame.display.set_mode(size)
+ 
+pygame.display.set_caption("Snow")
+ 
+
+done = False
+all_sprites_group = pygame.sprite.Group() 
+number_of_flakes = 50
+for x in range (number_of_flakes):
+    my_snow = Snow(random.randint(6,12), random.randrange(2,5) , random.randrange(0,49))
+    all_sprites_group.add(my_snow) 
+print(all_sprites_group)
+clock = pygame.time.Clock()
+ 
+# -------- Main Program Loop -----------
+while not done:
+    # --- Main event loop
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+    
+    # --- Game logic should go here
+    all_sprites_group.update() 
+    # --- Screen-clearing code goes here
+ 
+    # Here, we clear the screen to white. Don't put other drawing commands
+    # above this, or they will be erased with this command.
+ 
+    # If you want a background image, replace this clear with blit'ing the
+    # background image.
+    screen.fill(BLACK)
+    # --- Drawing code should go here
+    # -- Draw here
+    all_sprites_group.draw (screen)
+    # --- Go ahead and update the screen with what we've drawn.
+    pygame.display.flip()
+ 
+    # --- Limit to 60 frames per second
+    clock.tick(60)
+ 
+# Close the window and quit.
 pygame.quit()
