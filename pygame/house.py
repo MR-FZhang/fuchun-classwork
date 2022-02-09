@@ -16,8 +16,10 @@ WHITE = (255 ,255 ,255)
 #image = pygame.image.load("pygame/snow2.png","pygame/snow.png")
 
 
+
 class Snow(pygame.sprite.Sprite):
     def __init__(self, size , speed , color):
+        global rand_colors
         rand_colors = []
         for j in range(1000):
             rand_colors.append(pygame.Color("#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])))
@@ -38,6 +40,15 @@ class Snow(pygame.sprite.Sprite):
         self.color = rand_colors[random.randrange(0,49)]
         self.speed = speed
     #end procedure
+    def update(self):
+        self.rect.y += self.speed
+        
+        if self.rect.y > 500:
+            self.rect.y = 0
+            self.image.fill(rand_colors[self.color])
+
+
+   
 
 
 
@@ -51,8 +62,9 @@ class Snow(pygame.sprite.Sprite):
 pygame.init()
 
 size = (700, 500)
+
 screen = pygame.display.set_mode(size)
- 
+scr_height = screen.get_width()
 pygame.display.set_caption("Snow")
  
 
